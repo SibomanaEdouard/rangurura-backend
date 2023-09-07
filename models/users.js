@@ -1,0 +1,50 @@
+const mongoose=require('mongoose');
+const userSchema=new mongoose.Schema({
+    amazina:{
+        type:String,
+        required:true,
+        minLength:3,
+        
+    },
+    intara:{
+        type:String,
+        required:true,
+        minLength:3,   
+    },
+    akarere:{
+        type:String,
+        required:true,     
+    },
+    umurenge:{
+        type:String,
+        required:true,     
+    },
+    akagari:{
+        type:String,
+        required:true,     
+    },
+    umudugudu:{
+        type:String,
+        required:true,     
+    },
+    telephone:{
+        type:String,
+        required:true,
+        unique:true     
+    },
+    indangamuntu:{
+        type:String,
+        required:true,
+        unique:true     
+    },
+    ijambobanga:{
+        type:String,
+        required:true,     
+    },
+    imageUrl:{
+        type:String,
+        required:false,     
+    },
+  
+})
+module.exports=mongoose.model('users',userSchema);
