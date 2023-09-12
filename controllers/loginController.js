@@ -1,5 +1,6 @@
 const Users=require('../models/users')
 const bcrypt=require('bcrypt')
+
 // this is the logic of login the user in the system
 const InjizaUmuturage=async (req,res)=>{
     const{indangamuntu,ijambobanga}=req.body
@@ -12,7 +13,7 @@ if(!findUser){
 }else{
     //let check for password
     const storedPassword=await findUser.ijambobanga;
-    const comparePassword=bcrypt.compare(ijambobanga,storedPassword)
+    const comparePassword=await bcrypt.compare(ijambobanga,storedPassword)
     if(comparePassword){
         res.status(200).json({message:" Felestation winjiye muri Rangurura vuga ikibazo cyawe! "})
     }else{
