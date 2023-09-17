@@ -1,14 +1,12 @@
-
-//this is to require all dependencies
+require('dotenv').config();
 const {config}=require("dotenv");
 const http=require("http");
-const mongo=require("mongoose");
-const mysql=require("mysql");
+const mysql=require("mysql2");
 const express=require("express");
 const cors=require("cors");
 const routes=require('./Routes/routes');
 const bodyParser=require('body-parser');
-
+require("./connections");
 
 //this is to make express as function
 const app=express();
@@ -17,24 +15,6 @@ const server=http.createServer(app);
 //to use config;
 app.use(cors());
 config();
-
-// Create a MySQL connection pool
-const dbConfig = {
-    host: process.env.HOST,
-    user: process.env.USER,
-    password: process.env.PASSWORD,
-    database: process.env.DATABASE,
-  };
-  
-  const con = mysql.createPool(dbConfig);
-  
-  con.getConnection((err) => {
-    if (err) {
-      console.error("Failed to connect to MySQL:", err);
-    } else {
-      console.log("Connected to MySQL database");
-    }
-  });
 
 //this is configuration
 app.use(bodyParser.urlencoded({ extended: false }));
