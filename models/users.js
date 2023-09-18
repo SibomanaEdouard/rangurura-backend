@@ -1,78 +1,66 @@
-// const mongoose=require('mongoose');
-// const userSchema=new mongoose.Schema({
-//     amazina:{
-//         type:String,
-//         required:true,
-//         minLength:3,
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = new Sequelize(process.env.DATABASE, process.env.USERS, process.env.PASSWORD, {
+  host: process.env.HOST,
+  dialect: 'mysql',
+});
+
+const User = sequelize.define('User', {
+    amazina:{
+        type:DataTypes.STRING,
+        allowNull:false, 
         
-//     },
-//     intara:{
-//         type:String,
-//         required:true,
-//         minLength:3,   
-//     },
-//     akarere:{
-//         type:String,
-//         required:true,     
-//     },
-//     umurenge:{
-//         type:String,
-//         required:true,     
-//     },
-//     akagari:{
-//         type:String,
-//         required:true,     
-//     },
-//     umudugudu:{
-//         type:String,
-//         required:true,     
-//     },
-//     telephone:{
-//         type:String,
-//         required:true,
-//         unique:true     
-//     },
-//     indangamuntu:{
-//         type:String,
-//         required:true,
-//         unique:true     
-//     },
-//     ijambobanga:{
-//         type:String,
-//         required:true,     
-//     },
-//     imageUrl:{
-//         type:String,
-//         required:false,     
-//     },
-  
-// })
-// module.exports=mongoose.model('users',userSchema);
+    },
+    intara:{
+        type:DataTypes.STRING,
+        allowNull:false,    
+    },
+    akarere:{
+        type:DataTypes.STRING,
+        allowNull:false,     
+    },
+    umurenge:{
+        type:DataTypes.STRING,
+        allowNull:false,      
+    },
+    akagari:{
+        type:DataTypes.STRING,
+        allowNull:false,      
+    },
+    umudugudu:{
+        type:DataTypes.STRING,
+        allowNull:false,     
+    },
+    telephone:{
+        type:DataTypes.STRING,
+        allowNull:false, 
+        unique:true     
+    },
+    indangamuntu:{
+        type:DataTypes.STRING,
+        allowNull:false,   
+        unique:true     
+    },
+    ijambobanga:{
+        type:DataTypes.STRING,
+        allowNull:false,   
+    },
 
-const mysql = require("mysql2");
+    imageUrl:{
+        type:DataTypes.STRING,
+        allowNull:true,     
+    },
 
-// Define a User model
-const User = {
-  create: async (userData) => {
-    const sql = "INSERT INTO users (amazina, intara, akarere, umurenge, akagari, umudugudu, telephone, indangamuntu, ijambobanga, imageUrl) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    const values = [
-      userData.amazina,
-      userData.intara,
-      userData.akarere,
-      userData.umurenge,
-      userData.akagari,
-      userData.umudugudu,
-      userData.telephone,
-      userData.indangamuntu,
-      userData.ijambobanga,
-      userData.imageUrl || null, // Assuming imageUrl is optional
-    ];
+});
 
-    const [rows, fields] = await pool.execute(sql, values);
-    return rows.insertId;
-  },
-
-  // Add other CRUD operations as needed
-};
+// Sync the model with the database to create the table
+sequelize.sync()
+  .then(() => {
+    console.log('Table created successfully.');
+  })
+  .catch((err) => {
+    console.error('Error creating table:', err);
+  });
 
 module.exports = User;
+
+
